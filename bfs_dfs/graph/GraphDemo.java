@@ -1,4 +1,4 @@
-package graph;
+package bfs_dfs.graph;
 
 import java.util.HashSet;
 import java.util.LinkedList;

@@ -1,3 +1,5 @@
+package bfs_dfs.tree;
+
 //queue for tree
 class QueueNode{
 	QueueNode next;
