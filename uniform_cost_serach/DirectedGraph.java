@@ -1,4 +1,4 @@
-package bfs_dfs.graph;
+package uniform_cost_serach;
 
 import java.util.*;
 
@@ -6,6 +6,7 @@ class Edge<T> {
     T source;
     T destination;
     int weight;
+    String path;
 
     public Edge(T source , T destination , int weight){
         this.source = source;
@@ -22,7 +23,6 @@ class Edge<T> {
 
 class Graph<T> {
 
-    // We use Hashmap to store the edges in the graph
     private Map<T, List<Edge<T>> > map = new HashMap<>();
 
     // This function adds a new vertex to the graph
@@ -31,13 +31,7 @@ class Graph<T> {
         map.put(s, new LinkedList<Edge<T>>());
     }
 
-    // This function adds the edge
-    // between source to destination
-    public void addEdge(T source,
-                        T destination,
-                        boolean bidirectional,
-                        int weight
-                        )
+    public void addEdge( T source, T destination, int weight )
     {
 
         if (!map.containsKey(source))
@@ -47,9 +41,6 @@ class Graph<T> {
             addVertex(destination);
 
         map.get(source).add(new Edge<>(source , destination , weight));
-        if (bidirectional == true) {
-            map.get(destination).add(new Edge<>(destination , source , weight));
-        }
     }
 
     public void bfs(T start_vertex){
@@ -87,11 +78,45 @@ class Graph<T> {
         }
     }
 
+    // uniform cost search using priority queue
+    public void ucs(T source , T des){
+
+        // Set<T> set = new HashSet<>();
+        
+        // set.add(source);
+        PriorityQueue<Edge<T>> pq = new PriorityQueue<>(
+            (a,b)->a.weight - b.weight
+        );
+        for(Edge<T> val : map.get(source)){
+            val.path = source +" -> "+ val.destination;
+            pq.add(val);
+            // set.add(val.destination);
+        }
+
+        while(!pq.isEmpty()){
+            Edge<T> tmp = pq.poll();
+
+            if(tmp.destination.equals(des)){
+                System.out.println("reached , weight : " + tmp.weight+" // path : "+ tmp.path);
+                break;
+            }
+
+            if(map.containsKey(tmp.destination)){
+                for(Edge<T> val : map.get(tmp.destination)){
+                    // if(!set.contains(val.destination)){
+                        val.weight = tmp.weight + val.weight;
+                        val.path = tmp.path + " -> " + val.destination;
+                        pq.add(val);
+                        // set.add(val.destination);
+                    // }
+                }
+            }
+        }
+    }
     
     // Prints the adjancency list of each vertex.
     @Override
-    public String toString()
-    {
+    public String toString(){
         StringBuilder builder = new StringBuilder();
 
         for (T v : map.keySet()) {
@@ -106,33 +131,27 @@ class Graph<T> {
     }
 
 }
-// Driver Code
+
 public class DirectedGraph {
 
-    public static void main(String args[])
-    {
+    public static void main(String args[]){
 
-        // Object of graph is created.
-        Graph<Integer> g = new Graph<Integer>();
+        Graph<String> g2 = new Graph<>();
+        g2.addEdge("Source", "b", 3);
+        g2.addEdge("Source", "c", 5);
+        g2.addEdge("b", "f", 4);
+        g2.addEdge("c", "e", 2);
+        g2.addEdge("c", "d", 1);
+        g2.addEdge("f", "j", 1);
+        g2.addEdge("e", "f", 2);
+        g2.addEdge("d", "e", 4);
+        g2.addEdge("e", "dest", 1);
 
-        // edges are added.
-        // Since the graph is bidirectional,
-        // so boolean bidirectional is passed as true.
-        g.addEdge(0, 1,true ,1);
-        g.addEdge(0, 4, true ,1);
-        g.addEdge(1, 2, true ,1);
-        g.addEdge(1, 3, true,1) ;
-        g.addEdge(1, 4, true,1);
-        g.addEdge(2, 3, true,1);
-        g.addEdge(3, 4, true,1);
+        System.out.println(g2.toString());
 
-        // Printing the graph
-        System.out.println("Graph:\n"
-                           + g.toString());
+        System.out.println("=========");
 
+        g2.ucs("Source", "dest");
 
-        g.bfs(4);
-        System.out.println("===========");
-        g.dfs(4);
     }
 } 
