@@ -67,9 +67,9 @@ class GraphMatrix{
 
             if(!set.contains(tmp)){
                 System.out.println("visited : "+tmp);
+                set.add(tmp);
             }
 
-            set.add(tmp);
 
             for (int i = 0 ; i < adjMatrix[tmp].length ; i++){
                 if(adjMatrix[tmp][i]){

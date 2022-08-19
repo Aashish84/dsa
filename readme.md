@@ -1,12 +1,10 @@
-# To compile and run java file inside package
+# To compile and run java file inside package :
 
-## Compile : **javac ./<package_name>/<File_Class_Name>.java**
-
-> ### _eg:- javac ./bfs_dfs/graph/GraphDemo.java_
+- ## _Compile :_ **javac ./<package_name>/<File_Class_Name>.java**
+  > ### &ensp; _eg:- javac ./bfs_dfs/graph/GraphDemo.java_
 
 <br/>
 <br/>
 
-## Run : **java <package_name>.<File_Class_Name>**
-
-> ### _eg:- java bfs_dfs.graph.GraphDemo_
+- ## _Run :_ **java <package_name>.<File_Class_Name>**
+  > ### &ensp; _eg:- java bfs_dfs.graph.GraphDemo_
