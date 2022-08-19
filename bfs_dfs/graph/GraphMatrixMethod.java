@@ -84,7 +84,7 @@ class GraphMatrix{
     }
 
 }
-class GraphDemo{
+class GraphMatrixMethod{
 
     public static void main(String[] args) {
         GraphMatrix g = new GraphMatrix(5);
